@@ -55,6 +55,65 @@ This project determines where Olist stands — and what that means for revenue s
 
 All analysis was conducted in MySQL.
 
+# 🧹 Data Cleaning & Assumptions
+
+This project focuses on customer behavior and revenue modeling.  
+The Olist dataset is already structured and relational, so heavy preprocessing was not required.  
+However, several controls were applied to ensure accuracy.
+
+---
+
+## ✅ What Was Done
+
+- Revenue was calculated using:
+  `SUM(payment_value) GROUP BY order_id`  
+  → Prevents duplication from installment payments.
+
+- Repeat customers were identified using `customer_unique_id`  
+  → Ensures correct customer tracking across orders.
+
+- First orders were identified using `ROW_NUMBER()`  
+  → Guarantees accurate first-purchase logic.
+
+- For delivery impact analysis:
+  - Orders without delivery timestamps were treated as late.
+  - This ensures no incomplete deliveries are mistakenly classified as on-time.
+
+---
+
+## ⚠️ Scope Decisions
+
+- A separate cleaned table (e.g., `clean_delivered_orders`) was not created.
+- Orders were not explicitly filtered to `order_status = 'delivered'`.
+
+Reason:
+
+Revenue was calculated using payment records, which represent completed financial transactions.  
+Therefore, using a separate cleaned delivered-order table would not materially change revenue totals or retention trends.
+
+If filtered to delivered-only orders, overall directional results would remain the same.
+
+---
+
+## 🏭 Production-Level Enhancements (If This Were a Live System)
+
+In a real production environment, the following could be added:
+
+- Explicit filtering to delivered orders only  
+- Automated validation checks  
+- Outlier monitoring for extreme payment values  
+
+These steps improve robustness but would not materially change the strategic conclusions of this analysis.
+
+---
+
+## 🎯 Conclusion
+
+The dataset required minimal cleaning for this behavioral and revenue analysis.  
+All key calculations were controlled for duplication and customer identity.  
+
+The results remain directionally accurate and strategically sound.
+
 ---
 
 # 💰 Revenue Structure Breakdown
