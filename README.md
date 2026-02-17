@@ -14,6 +14,10 @@ Is Olist’s revenue model driven by customer retention, or does it depend mainl
 Rather than stopping at descriptive metrics, this analysis connects customer behavior to revenue structure, operational performance, and strategic implications.
 
 ---
+## 🚀 Strategic Impact
+
+This project goes beyond metric reporting and evaluates structural revenue sustainability. The analysis identifies that Olist operates as an acquisition-driven marketplace and quantifies the financial implications of weak retention. It further demonstrates how targeted acquisition toward high-repeat product categories can materially improve customer lifetime value and marketing efficiency.
+
 
 # 🎯 Business Context
 
