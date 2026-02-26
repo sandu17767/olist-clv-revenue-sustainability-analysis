@@ -1,50 +1,50 @@
 # 📊 Customer Lifetime Value & Revenue Sustainability Analysis  
-## 🛒 Olist Marketplace | SQL Project
+🛒 Olist Marketplace | SQL Project  
 
 ---
 
-# 📌 Project Overview
+## 📌 Project Overview
 
 This project evaluates customer lifetime value (CLV) and long-term revenue sustainability within the Olist marketplace.
 
-The core question was:
-
+**Core Question:**  
 Is Olist’s revenue model driven by customer retention, or does it depend mainly on continuous acquisition of new customers?
 
 Rather than stopping at descriptive metrics, this analysis connects customer behavior to revenue structure, operational performance, and strategic implications.
 
 ---
+
 ## 🚀 Strategic Impact
 
-This project goes beyond metric reporting and evaluates structural revenue sustainability. The analysis identifies that Olist operates as an acquisition-driven marketplace and quantifies the financial implications of weak retention. It further demonstrates how targeted acquisition toward high-repeat product categories can materially improve customer lifetime value and marketing efficiency.
+This project evaluates whether Olist’s growth model is structurally stable or dependent on constant acquisition.  
+The analysis quantifies how weak retention impacts revenue sustainability and how targeted acquisition can improve long-term value.
 
+---
 
-# 🎯 Business Context
+## 🎯 Business Context
 
 E-commerce businesses typically grow through:
 
 - Retention-driven compounding revenue  
 - Continuous acquisition of new customers  
 
-Retention-driven businesses build stability over time.  
-Acquisition-driven businesses rely heavily on marketing spend.
+Retention-driven businesses build revenue stability over time.  
+Acquisition-driven businesses depend heavily on ongoing marketing efficiency.
 
 This project determines where Olist stands — and what that means for revenue sustainability.
 
 ---
 
-# 🗂 Data & Technical Approach
+## 🗂 Data & Technical Approach
 
-## 📁 Tables Used
-
+### 📁 Tables Used
 - orders  
 - order_payments  
 - customers  
 - order_items  
 - products  
 
-## 🛠 Techniques Applied
-
+### 🛠 Techniques Applied
 - Common Table Expressions (CTEs)  
 - Window Functions (ROW_NUMBER, NTILE)  
 - Cohort Analysis  
@@ -55,64 +55,62 @@ This project determines where Olist stands — and what that means for revenue s
 
 All analysis was conducted in MySQL.
 
-# 🧹 Data Cleaning & Assumptions
+---
+
+## 🧹 Data Cleaning & Assumptions
 
 This project focuses on customer behavior and revenue modeling.  
-The Olist dataset is already structured and relational, so heavy preprocessing was not required.  
-However, several controls were applied to ensure accuracy.
+The Olist dataset is already structured and relational, so heavy preprocessing was not required.
+
+However, several controls were applied to ensure analytical accuracy.
+
+### ✅ What Was Done
+
+Revenue was calculated using: `SUM(payment_value) GROUP BY order_id`  
+→ Prevents duplication from installment payments.
+
+Repeat customers were identified using `customer_unique_id`  
+→ Ensures accurate tracking across multiple orders.
+
+First orders were identified using `ROW_NUMBER()`  
+→ Guarantees correct lifecycle modeling.
+
+For delivery impact analysis:
+
+Orders without delivery timestamps were treated as late.  
+This prevents incomplete deliveries from being incorrectly classified as on-time.
 
 ---
 
-## ✅ What Was Done
+### ⚠️ Scope Decisions
 
-- Revenue was calculated using:
-  `SUM(payment_value) GROUP BY order_id`  
-  → Prevents duplication from installment payments.
+A separate cleaned table (e.g., `clean_delivered_orders`) was not created.  
+Orders were not explicitly filtered to `order_status = 'delivered'`.
 
-- Repeat customers were identified using `customer_unique_id`  
-  → Ensures correct customer tracking across orders.
-
-- First orders were identified using `ROW_NUMBER()`  
-  → Guarantees accurate first-purchase logic.
-
-- For delivery impact analysis:
-  - Orders without delivery timestamps were treated as late.
-  - This ensures no incomplete deliveries are mistakenly classified as on-time.
-
----
-
-## ⚠️ Scope Decisions
-
-- A separate cleaned table (e.g., `clean_delivered_orders`) was not created.
-- Orders were not explicitly filtered to `order_status = 'delivered'`.
-
-Reason:
-
+**Reason:**  
 Revenue was calculated using payment records, which represent completed financial transactions.  
-Therefore, using a separate cleaned delivered-order table would not materially change revenue totals or retention trends.
+Filtering delivered-only orders would not materially change revenue totals or retention trends.
 
-If filtered to delivered-only orders, overall directional results would remain the same.
+If filtered to delivered-only orders, overall directional results would remain consistent.
 
 ---
 
-## 🏭 Production-Level Enhancements (If This Were a Live System)
+### 🏭 Production-Level Enhancements (If This Were a Live System)
 
-In a real production environment, the following could be added:
+In a production environment, the following enhancements would improve robustness:
 
 - Explicit filtering to delivered orders only  
 - Automated validation checks  
 - Outlier monitoring for extreme payment values  
 
-These steps improve robustness but would not materially change the strategic conclusions of this analysis.
+These improvements strengthen reliability but would not materially change strategic conclusions.
 
 ---
 
-## 🎯 Conclusion
+## 🎯 Conclusion on Data Quality
 
-The dataset required minimal cleaning for this behavioral and revenue analysis.  
-All key calculations were controlled for duplication and customer identity.  
-
-The results remain directionally accurate and strategically sound.
+The dataset required minimal structural cleaning for behavioral and revenue modeling.  
+All key calculations were controlled for duplication and customer identity, ensuring directionally reliable results.
 
 ---
 
@@ -122,7 +120,7 @@ The results remain directionally accurate and strategically sound.
 
 - Total Unique Customers: 96,095  
 - One-Time Buyers: 93,098 (≈97%)  
-- Repeat Buyers: 2,997 (≈3%)  
+- Repeat Buyers: 2,997 (≈3%)
 
 ## 💵 Revenue Split
 
@@ -135,17 +133,14 @@ The results remain directionally accurate and strategically sound.
 - One-Time Avg Revenue ≈ 161  
 - Repeat Avg Revenue ≈ 315  
 
-Repeat customers generate nearly 2x revenue per customer, but they represent a very small portion of the base.
+Repeat customers generate nearly 2x revenue per customer but represent only 3% of the customer base.
 
 ---
 
 ## 🔎 Key Insight
 
-Revenue does not compound through repeat behavior.
-
-Instead, revenue depends heavily on first-time purchases.
-
-Olist operates as a structurally acquisition-driven marketplace.
+Revenue does not compound through repeat behavior.  
+Olist’s revenue model is structurally acquisition-driven rather than retention-driven.
 
 ---
 
@@ -153,16 +148,15 @@ Olist operates as a structurally acquisition-driven marketplace.
 
 Customers were grouped by first purchase month to measure retention over time.
 
-## Findings
+### Findings
 
 - Month 1 retention ≈ near zero  
 - No stable retention curve  
 - Average customer lifespan ≈ 2.7 days  
 - Purchase frequency ≈ 1.03  
 
-Customers typically purchase once and do not return.
-
-This confirms structural retention weakness.
+Customers typically purchase once and do not return.  
+This confirms systemic retention weakness rather than temporary churn fluctuation.
 
 ---
 
@@ -184,32 +178,23 @@ Most deliveries were already on-time.
 
 Late delivery reduces repeat probability by approximately 19% (relative difference).
 
-## Interpretation
-
-Delivery reliability influences retention.
-
-However, because most deliveries are already on-time, delivery performance alone cannot explain the overall retention weakness.
-
-It is a contributing factor — not the main structural driver.
+**Interpretation:**  
+Delivery reliability influences repeat probability.  
+However, since most deliveries are already on-time, delivery performance alone does not explain overall retention weakness.
 
 ---
 
 # 💳 First-Order Value Segmentation
 
-Customers were divided into quartiles using NTILE(4) based on first-order value.
+Customers were divided into quartiles using `NTILE(4)` based on first-order value.
 
-## Return Rates by Spend Level
+### Return Rates by Spend Level
 
 - Lowest Quartile → 3.35%  
 - Highest Quartile → 2.93%  
 
-There was no meaningful variation across spending levels.
-
-## Interpretation
-
-Higher initial spending does not increase repeat probability.
-
-Retention weakness is not driven by basket size or initial customer value.
+There is no meaningful variation in repeat probability across spending levels.  
+Retention weakness is structural and not driven by initial basket size.
 
 ---
 
@@ -217,17 +202,14 @@ Retention weakness is not driven by basket size or initial customer value.
 
 To ensure statistical reliability, only categories with 500 or more first-time customers were analyzed.
 
-## Observations
+### Observations
 
 - Most categories → 1–3% repeat rate  
 - Console Games → 1.73%  
 - Eletrodomesticos → 9.14%  
 
-## Interpretation
-
-Some product categories naturally support stronger repeat behavior.
-
-Retention differences are influenced more by product structure than by spend level.
+Retention varies significantly by product category.  
+Product structure has a stronger influence on repeat behavior than initial spend level.
 
 ---
 
@@ -240,9 +222,8 @@ If 5% of one-time buyers (approximately 4,655 customers) converted into repeat c
 - Additional Revenue ≈ 698,250  
 - Estimated uplift ≈ 4–5% of total revenue  
 
-## Insight
-
-Even small improvements in retention could meaningfully improve revenue stability.
+Even modest improvements in retention could meaningfully improve revenue stability.  
+Small behavioral shifts can generate material financial impact.
 
 ---
 
@@ -255,18 +236,16 @@ Acquiring 1,000 customers in:
 - A 2% repeat category → ~20 repeat customers  
 - A 9% repeat category → ~90 repeat customers  
 
-This creates more than 4x difference in expected repeat revenue from the same marketing spend.
+This creates more than a 4x difference in expected repeat revenue from the same marketing spend.
 
-## Marketing Efficiency Implication
+### Marketing Efficiency Implication
 
 Untargeted acquisition:
-
 - Attracts mostly low-repeat customers  
 - Keeps CLV low  
 - Increases dependency on marketing  
 
 Targeted acquisition toward higher-retention categories:
-
 - Improves repeat probability  
 - Increases CLV  
 - Enhances marketing ROI  
@@ -279,7 +258,7 @@ Targeted acquisition toward higher-retention categories:
 - Shift toward targeted acquisition strategies focused on high-repeat categories  
 - Protect first-order experience to avoid suppressing repeat probability  
 - Apply vertical-specific retention strategies in naturally repeat-friendly categories  
-- Avoid blanket retention campaigns across low-repeat verticals  
+- Avoid blanket retention campaigns across structurally low-repeat verticals  
 
 ---
 
@@ -294,13 +273,14 @@ The analysis reveals:
 - Spend level does not drive retention  
 - Certain product categories demonstrate stronger repeat dynamics  
 
-Revenue sustainability depends not only on operational improvements, but on smarter acquisition targeting and vertical-level strategy.
+Revenue sustainability depends not only on operational improvements but on smarter acquisition targeting and category-level strategy.
 
-## 🔒 Overall Assessment
+---
 
-Olist’s current growth model is sustainable only as long as acquisition remains strong. Without improvements in retention or more targeted acquisition strategies, long-term revenue stability remains vulnerable to changes in marketing efficiency and customer acquisition costs.
+# 🔒 Overall Assessment
 
-This project provides a data-backed foundation for optimizing acquisition mix, protecting customer experience, and identifying verticals with higher lifetime value potential.
+Olist’s growth model remains sustainable only as long as acquisition performance remains strong.  
+Without retention improvement or acquisition mix optimization, long-term revenue stability is vulnerable to marketing efficiency changes.
 
 ---
 
