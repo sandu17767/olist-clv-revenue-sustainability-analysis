@@ -2,6 +2,11 @@
 🛒 Olist Marketplace | SQL Project  
 
 ---
+## Executive Summary
+
+This project evaluates customer lifetime value sustainability within an e-commerce marketplace. 
+Key finding: 97% of revenue is driven by one-time purchases, indicating high dependency on acquisition rather than retention.
+A 5% improvement in retention could significantly increase repeat revenue concentration.
 
 ## 📌 Project Overview
 
